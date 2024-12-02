@@ -1,4 +1,5 @@
 ﻿using Dominio;
+using Negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,10 +19,28 @@ namespace Promo_Web
         protected void btnSiguiente_Click(object sender, EventArgs e)
         {
             Voucher vouch = new Voucher();
-            vouch.Id = 1;
+            VoucherNegocio negocio = new VoucherNegocio();
 
-            Session.Add("voucher", vouch);
-            Response.Redirect("ElegirPremio.aspx", false);
+            string codigo = txtVoucher.Text;
+
+            vouch = negocio.buscarVoucher(codigo);
+
+            if (vouch == null)
+            {
+                lblError.Text = "Voucher inexistente. Verifique e ingrese nuevamente";
+            }
+            else
+            {
+                if(vouch.FechaCanje != DateTime.MinValue )
+                {
+                    lblError.Text = "Voucher canjeado. Verifique e intente nuevamente";
+                }
+                else
+                {
+                    Session.Add("voucher", vouch);
+                    Response.Redirect("ElegirPremio.aspx", false);
+                }
+            }
         }
     }
 }
