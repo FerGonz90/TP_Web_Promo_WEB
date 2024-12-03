@@ -61,5 +61,30 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
+        public void canjearVoucher(string codVouch, int idClien, int idArt)
+        {
+            AccesoDatos.AccesoDatos datos = new AccesoDatos.AccesoDatos();
+
+            try
+            {
+                string fechaActualString = DateTime.Now.ToString("yyyy-MM-dd");
+                string consulta = "Update Vouchers Set IdCliente = " + idClien + ", FechaCanje =  '" + 
+                                  fechaActualString + "', IdArticulo = " + idArt + "Where CodigoVoucher " + 
+                                  "= '" + codVouch + "'";
+
+                datos.setConsulta(consulta);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }

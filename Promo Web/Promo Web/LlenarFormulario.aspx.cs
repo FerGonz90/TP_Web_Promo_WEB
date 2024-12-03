@@ -72,7 +72,36 @@ namespace Promo_Web
             else 
             { 
                 blanquearErrorLabel();
-                lblErrorEmail.Text = "TODO OK";
+                VoucherNegocio negocio = new VoucherNegocio();
+                Voucher auxVoucher = (Voucher)Session["voucher"];
+                string codigo = auxVoucher.Codigo;
+                int idArticulo = int.Parse(Request.QueryString["id"]);
+
+                if (encontrado)
+                {
+                    Cliente auxCliente = (Cliente)Session["cliente"];
+                    int idCliente = auxCliente.Id;
+
+                    negocio.canjearVoucher(codigo, idCliente, idArticulo);
+                }
+                else
+                {
+                    ClienteNegocio clienteNegocio = new ClienteNegocio();
+                    int idCliente = clienteNegocio.maximoId() + 1;
+                    Cliente cliente = new Cliente();
+
+                    negocio.canjearVoucher(codigo, idCliente, idArticulo);
+
+                    cliente.Documento = txtDocumento.Text;
+                    cliente.Nombre = txtNombre.Text;
+                    cliente.Apellido = txtApellido.Text;
+                    cliente.Email = txtEmail.Text;
+                    cliente.Direccion = txtDireccion.Text;
+                    cliente.Ciudad = txtCiudad.Text;
+                    cliente.CP = int.Parse(txtCP.Text);
+
+                    clienteNegocio.insertarCliente(cliente);
+                }
             }
         }
 
@@ -164,6 +193,7 @@ namespace Promo_Web
                     {
                         blanquearErrorLabel();
                         encontrado = true;
+                        Session.Add("cliente", cliente);
                         txtNombre.Text = cliente.Nombre;
                         txtApellido.Text = cliente.Apellido;
                         txtEmail.Text = cliente.Email;

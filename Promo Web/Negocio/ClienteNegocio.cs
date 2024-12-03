@@ -51,5 +51,61 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
+
+        public int maximoId()
+        {
+            AccesoDatos.AccesoDatos datos = new AccesoDatos.AccesoDatos();
+            
+            try
+            {
+                string consulta = "Select Max(Id) as MaxId from Clientes";
+                datos.setConsulta(consulta);
+                datos.ejecutarLectura();
+                
+
+                if(datos.Lector.Read())
+                {
+                    int id = (int)datos.Lector["MaxId"];
+                    return id;
+                }
+                else return 0;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                if (datos.Lector != null)
+                    datos.Lector.Close();
+                datos.cerrarConexion();
+            }
+        }
+        
+        public void insertarCliente(Cliente cliente)
+        {
+            AccesoDatos.AccesoDatos datos = new AccesoDatos.AccesoDatos();
+
+            try
+            {
+                string consulta = "Insert Into Clientes (Documento, Nombre, Apellido, Email, Direccion, Ciudad, CP)"
+                                  + " Values ('" + cliente.Documento + "', '" + cliente.Nombre + "', '" +
+                                  cliente.Apellido + "', '" + cliente.Email + "', '" + cliente.Direccion + "', '" +
+                                  cliente.Ciudad + "', '" + cliente.CP + "'";
+                datos.setConsulta("");
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }
