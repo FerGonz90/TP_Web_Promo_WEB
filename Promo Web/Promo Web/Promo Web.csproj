@@ -70,6 +70,7 @@
     <Content Include="Default.aspx" />
     <Content Include="ElegirPremio.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="LlenarFormulario.aspx" />
     <Content Include="Visual CSS\estilos.css" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -90,6 +91,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="LlenarFormulario.aspx.cs">
+      <DependentUpon>LlenarFormulario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LlenarFormulario.aspx.designer.cs">
+      <DependentUpon>LlenarFormulario.aspx</DependentUpon>
     </Compile>
     <Compile Include="Master.Master.cs">
       <DependentUpon>Master.Master</DependentUpon>

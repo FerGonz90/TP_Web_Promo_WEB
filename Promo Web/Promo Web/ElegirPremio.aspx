@@ -45,7 +45,7 @@
                         <div>
                             <asp:Label ID="lblDescripcion" CssClass="card-text" runat="server" />
                         </div>
-                        <asp:Button ID="btnElegir" Text="Elegir" CssClass="btn btn-primary mt-2" runat="server" />
+                        <asp:Button ID="btnElegir" Text="Elegir" OnClick="btnElegir_Click" CssClass="btn btn-primary mt-2" runat="server" />
                     </div>
                 </div>
             </div>
@@ -80,7 +80,7 @@
                         <div>
                             <asp:Label ID="lblDescripcion2" CssClass="card-text" runat="server" />
                         </div>
-                        <asp:Button ID="btnElegir2" Text="Elegir" CssClass="btn btn-primary mt-2" runat="server" />
+                        <asp:Button ID="btnElegir2" Text="Elegir" OnClick="btnElegir2_Click" CssClass="btn btn-primary mt-2" runat="server" />
                     </div>
                 </div>
             </div>
@@ -115,7 +115,7 @@
                         <div>
                             <asp:Label ID="lblDescripcion3" CssClass="card-text" runat="server" />
                         </div>
-                        <asp:Button ID="btnElegir3" Text="Elegir" CssClass="btn btn-primary mt-2" runat="server" />
+                        <asp:Button ID="btnElegir3" Text="Elegir" OnClick="btnElegir3_Click" CssClass="btn btn-primary mt-2" runat="server" />
                     </div>
                 </div>
             </div>

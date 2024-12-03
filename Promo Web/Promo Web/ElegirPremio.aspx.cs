@@ -110,5 +110,20 @@ namespace Promo_Web
                 throw ex;
             }
         }
+
+        protected void btnElegir_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("LlenarFormulario.aspx?id=1", false);
+        }
+
+        protected void btnElegir2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("LlenarFormulario.aspx?id=2", false);
+        }
+
+        protected void btnElegir3_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("LlenarFormulario.aspx?id=3", false);
+        }
     }
 }
