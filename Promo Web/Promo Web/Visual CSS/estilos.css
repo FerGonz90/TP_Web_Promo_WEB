@@ -1,0 +1,6 @@
+﻿.img-carousel {
+    width: 100%; /* Ajusta al contenedor */
+    height: 400px; /* Altura fija para uniformar las imágenes */
+    object-fit: cover; /* Mantiene el aspecto y recorta el exceso si es necesario */
+    overflow: hidden;
+}

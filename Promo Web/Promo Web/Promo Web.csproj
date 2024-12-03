@@ -70,6 +70,7 @@
     <Content Include="Default.aspx" />
     <Content Include="ElegirPremio.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Visual CSS\estilos.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
