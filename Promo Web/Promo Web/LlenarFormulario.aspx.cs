@@ -102,6 +102,8 @@ namespace Promo_Web
 
                     clienteNegocio.insertarCliente(cliente);
                 }
+
+                Response.Redirect("CargaExitosa.aspx", false);
             }
         }
 

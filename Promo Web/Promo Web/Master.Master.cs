@@ -12,7 +12,7 @@ namespace Promo_Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!(Page is Default || Page is Error))
+            if (!(Page is Default || Page is Error || Page is CargaExitosa))
             {
                 if (!Seguridad.Validar.SesionActiva(Session["voucher"]))
                     Response.Redirect("Default.aspx", false);
