@@ -27,13 +27,15 @@ namespace Promo_Web
 
             if (vouch == null)
             {
-                lblError.Text = "Voucher inexistente. Verifique e ingrese nuevamente";
+                Session.Add("error", "Voucher inexistente. Verifique e intente nuevamente");
+                Response.Redirect("Error.aspx", false);
             }
             else
             {
                 if(vouch.FechaCanje != DateTime.MinValue )
                 {
-                    lblError.Text = "Voucher canjeado. Verifique e intente nuevamente";
+                    Session.Add("error", "Voucher canjeado. Verifique e intente nuevamente");
+                    Response.Redirect("Error.aspx", false);
                 }
                 else
                 {

@@ -57,7 +57,4 @@
 
     </div>
 
-    <div class="contenedor-label" style="margin-top: 30px;">
-        <asp:Label ID="lblError" Text="Aquí se verán palabras cuando ocurra algún error" CssClass="text-danger mt-3" runat="server" />
-    </div>
 </asp:Content>
