@@ -76,6 +76,7 @@ namespace Promo_Web
                 Voucher auxVoucher = (Voucher)Session["voucher"];
                 string codigo = auxVoucher.Codigo;
                 int idArticulo = int.Parse(Request.QueryString["id"]);
+                encontrado = (bool)Session["encontrado"];
 
                 if (encontrado)
                 {
@@ -90,8 +91,6 @@ namespace Promo_Web
                     int idCliente = clienteNegocio.maximoId() + 1;
                     Cliente cliente = new Cliente();
 
-                    negocio.canjearVoucher(codigo, idCliente, idArticulo);
-
                     cliente.Documento = txtDocumento.Text;
                     cliente.Nombre = txtNombre.Text;
                     cliente.Apellido = txtApellido.Text;
@@ -101,6 +100,7 @@ namespace Promo_Web
                     cliente.CP = int.Parse(txtCP.Text);
 
                     clienteNegocio.insertarCliente(cliente);
+                    negocio.canjearVoucher(codigo, idCliente, idArticulo);
                 }
 
                 Response.Redirect("CargaExitosa.aspx", false);
@@ -180,7 +180,7 @@ namespace Promo_Web
         {
             int documento;
             if (!int.TryParse(txtDocumento.Text, out documento) || documento < 1 || documento > 99999999)
-                lblErrorDocumento.Text = "Debe ingresar un número entre 1 y 99999999.";
+                lblErrorDocumento.Text = "Debe ingresar un documento válido, sin puntos";
             else
             {
                 lblErrorDocumento.Text = "";
@@ -195,6 +195,7 @@ namespace Promo_Web
                     {
                         blanquearErrorLabel();
                         encontrado = true;
+                        Session["encontrado"] = true;
                         Session.Add("cliente", cliente);
                         txtNombre.Text = cliente.Nombre;
                         txtApellido.Text = cliente.Apellido;
@@ -206,6 +207,7 @@ namespace Promo_Web
                     else
                     {
                         encontrado = false;
+                        Session["encontrado"] = false;
                         blanquearTextBox();
                         habilitarTextBox();
                     }

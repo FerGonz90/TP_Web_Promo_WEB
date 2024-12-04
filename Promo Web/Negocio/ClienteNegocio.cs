@@ -92,8 +92,8 @@ namespace Negocio
                 string consulta = "Insert Into Clientes (Documento, Nombre, Apellido, Email, Direccion, Ciudad, CP)"
                                   + " Values ('" + cliente.Documento + "', '" + cliente.Nombre + "', '" +
                                   cliente.Apellido + "', '" + cliente.Email + "', '" + cliente.Direccion + "', '" +
-                                  cliente.Ciudad + "', '" + cliente.CP + "'";
-                datos.setConsulta("");
+                                  cliente.Ciudad + "', " + cliente.CP + ")";
+                datos.setConsulta(consulta);
                 datos.ejecutarAccion();
             }
             catch (Exception ex)
