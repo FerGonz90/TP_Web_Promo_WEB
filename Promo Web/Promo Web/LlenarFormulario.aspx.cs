@@ -113,6 +113,8 @@ namespace Promo_Web
                         negocio.canjearVoucher(codigo, idCliente, idArticulo);
                     }
 
+                    enviarEmail();
+
                     Response.Redirect("CargaExitosa.aspx", false);
                 }
                 catch (Exception ex)
@@ -234,6 +236,33 @@ namespace Promo_Web
                     Session.Add("error", ex.Message);
                     Response.Redirect("Error.aspx", false);
                 }
+            }
+        }
+
+        private void enviarEmail()
+        {
+            try
+            {
+                ArticuloNegocio negocio = new ArticuloNegocio();
+                int idArticulo = int.Parse(Request.QueryString["id"]);
+                int indice = idArticulo - 1;
+                EmailService emailService = new EmailService();
+                List<Articulo> listaArticulos = negocio.listarArticulos();
+
+                string correo = txtEmail.Text;
+                string premio = listaArticulos[indice].Nombre;
+                string descripcion = listaArticulos[indice].Descripcion;
+
+                string cuerpo = "<html><body><h1>Ya estás participando</h1><p>Premio elegido: "
+                    + premio + "</p><p>Descripción: " + descripcion + "</p>";
+
+                emailService.armarCorreo(correo, "Promo GANÁ", cuerpo);
+                emailService.enviarMail();
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex.Message);
+                Response.Redirect("Error.aspx", false);
             }
         }
     }
