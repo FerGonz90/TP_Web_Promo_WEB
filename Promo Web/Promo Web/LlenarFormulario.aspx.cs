@@ -14,10 +14,18 @@ namespace Promo_Web
         private bool encontrado;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            try
             {
-                deshabilitarTextBox();
+                if (!IsPostBack)
+                {
+                    deshabilitarTextBox();
 
+                }
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex.Message);
+                Response.Redirect("Error.aspx", false);
             }
         }
 
@@ -70,40 +78,49 @@ namespace Promo_Web
                 return;
             }
             else 
-            { 
-                blanquearErrorLabel();
-                VoucherNegocio negocio = new VoucherNegocio();
-                Voucher auxVoucher = (Voucher)Session["voucher"];
-                string codigo = auxVoucher.Codigo;
-                int idArticulo = int.Parse(Request.QueryString["id"]);
-                encontrado = (bool)Session["encontrado"];
-
-                if (encontrado)
+            {
+                try
                 {
-                    Cliente auxCliente = (Cliente)Session["cliente"];
-                    int idCliente = auxCliente.Id;
+                    blanquearErrorLabel();
+                    VoucherNegocio negocio = new VoucherNegocio();
+                    Voucher auxVoucher = (Voucher)Session["voucher"];
+                    string codigo = auxVoucher.Codigo;
+                    int idArticulo = int.Parse(Request.QueryString["id"]);
+                    encontrado = (bool)Session["encontrado"];
 
-                    negocio.canjearVoucher(codigo, idCliente, idArticulo);
+                    if (encontrado)
+                    {
+                        Cliente auxCliente = (Cliente)Session["cliente"];
+                        int idCliente = auxCliente.Id;
+
+                        negocio.canjearVoucher(codigo, idCliente, idArticulo);
+                    }
+                    else
+                    {
+                        ClienteNegocio clienteNegocio = new ClienteNegocio();
+                        int idCliente = clienteNegocio.maximoId() + 1;
+                        Cliente cliente = new Cliente();
+
+                        cliente.Documento = txtDocumento.Text;
+                        cliente.Nombre = txtNombre.Text;
+                        cliente.Apellido = txtApellido.Text;
+                        cliente.Email = txtEmail.Text;
+                        cliente.Direccion = txtDireccion.Text;
+                        cliente.Ciudad = txtCiudad.Text;
+                        cliente.CP = int.Parse(txtCP.Text);
+
+                        clienteNegocio.insertarCliente(cliente);
+                        negocio.canjearVoucher(codigo, idCliente, idArticulo);
+                    }
+
+                    Response.Redirect("CargaExitosa.aspx", false);
                 }
-                else
+                catch (Exception ex)
                 {
-                    ClienteNegocio clienteNegocio = new ClienteNegocio();
-                    int idCliente = clienteNegocio.maximoId() + 1;
-                    Cliente cliente = new Cliente();
-
-                    cliente.Documento = txtDocumento.Text;
-                    cliente.Nombre = txtNombre.Text;
-                    cliente.Apellido = txtApellido.Text;
-                    cliente.Email = txtEmail.Text;
-                    cliente.Direccion = txtDireccion.Text;
-                    cliente.Ciudad = txtCiudad.Text;
-                    cliente.CP = int.Parse(txtCP.Text);
-
-                    clienteNegocio.insertarCliente(cliente);
-                    negocio.canjearVoucher(codigo, idCliente, idArticulo);
+                    Session.Add("error", ex.Message);
+                    Response.Redirect("Error.aspx", false);
                 }
-
-                Response.Redirect("CargaExitosa.aspx", false);
+                
             }
         }
 
@@ -214,8 +231,8 @@ namespace Promo_Web
                 }
                 catch (Exception ex)
                 {
-
-                    throw ex;
+                    Session.Add("error", ex.Message);
+                    Response.Redirect("Error.aspx", false);
                 }
             }
         }

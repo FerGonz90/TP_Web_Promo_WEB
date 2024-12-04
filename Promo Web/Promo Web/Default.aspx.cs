@@ -23,26 +23,35 @@ namespace Promo_Web
 
             string codigo = txtVoucher.Text;
 
-            vouch = negocio.buscarVoucher(codigo);
+            try
+            {
+                vouch = negocio.buscarVoucher(codigo);
 
-            if (vouch == null)
-            {
-                Session.Add("error", "Voucher inexistente. Verifique e intente nuevamente");
-                Response.Redirect("Error.aspx", false);
-            }
-            else
-            {
-                if(vouch.FechaCanje != DateTime.MinValue )
+                if (vouch == null)
                 {
-                    Session.Add("error", "Voucher canjeado. Verifique e intente nuevamente");
+                    Session.Add("error", "Voucher inexistente. Verifique e intente nuevamente");
                     Response.Redirect("Error.aspx", false);
                 }
                 else
                 {
-                    Session.Add("voucher", vouch);
-                    Response.Redirect("ElegirPremio.aspx", false);
+                    if (vouch.FechaCanje != DateTime.MinValue)
+                    {
+                        Session.Add("error", "Voucher canjeado. Verifique e intente nuevamente");
+                        Response.Redirect("Error.aspx", false);
+                    }
+                    else
+                    {
+                        Session.Add("voucher", vouch);
+                        Response.Redirect("ElegirPremio.aspx", false);
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex.Message);
+                Response.Redirect("Error.aspx", false);
+            }
+
         }
     }
 }

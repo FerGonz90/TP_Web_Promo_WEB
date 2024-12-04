@@ -2,12 +2,12 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
-    function disableEnterKey(event) {
-        if (event.key === "Enter") {
-            event.preventDefault();
-            return false;
+        function disableEnterKey(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                return false;
+            }
         }
-    }
 </script>
 </asp:Content>
 
@@ -38,6 +38,14 @@
             <div class="col-md-4">
                 <asp:Label ID="lblEmail" runat="server" Text="Email:" AssociatedControlID="txtEmail" CssClass="form-label" />
                 <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" />
+                <asp:RegularExpressionValidator
+                    ID="revEmail"
+                    runat="server"
+                    ControlToValidate="txtEmail"
+                    CssClass="text-danger"
+                    ErrorMessage="El formato del email no es válido."
+                    ValidationExpression="^[^@\s]+@[^@\s]+\.[^@\s]+$">
+                </asp:RegularExpressionValidator>
                 <asp:Label ID="lblErrorEmail" runat="server" CssClass="text-danger"></asp:Label>
             </div>
         </div>
@@ -56,6 +64,13 @@
             <div class="col-md-3">
                 <asp:Label ID="lblCP" runat="server" Text="CP:" AssociatedControlID="txtCP" CssClass="form-label" />
                 <asp:TextBox ID="txtCP" runat="server" CssClass="form-control" />
+                <asp:RegularExpressionValidator
+                    ID="revNumero"
+                    runat="server"
+                    ControlToValidate="txtCP"
+                    CssClass="text-danger"
+                    ErrorMessage="Solo se permiten números entre 1 y 9999."
+                    ValidationExpression="^[1-9][0-9]{0,3}$" />
                 <asp:Label ID="lblErrorCP" runat="server" CssClass="text-danger"></asp:Label>
             </div>
         </div>
